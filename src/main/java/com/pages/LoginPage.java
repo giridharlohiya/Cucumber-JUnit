@@ -3,6 +3,7 @@ package com.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+
 public class LoginPage {
 
 	private WebDriver driver;
@@ -11,21 +12,32 @@ public class LoginPage {
 	public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
-	
+		
 	//Locators
-	By Email_XP = By.xpath("//*[text()='Username']");
-    By Password_XP = By.xpath("//*[text()='Username']");
-    
+	By Email_ID = By.id("user-name");
+    By Password_ID = By.id("password");
+    By LoginButton_ID = By.id("login-button");
+    By ProductsTextOnHomePage = By.cssSelector(".title");
     
     //Methods
     
-    public void Enter_URL() {
-    	driver.get("URL");
+    public boolean Enter_URL() {
+    	driver.get("https://www.saucedemo.com/");
+    	boolean EmailVisible = driver.findElement(Email_ID).isDisplayed();
+    	if(EmailVisible){
+		System.out.println("URL Launch Success");
+    	return true;
+		}
+    	else
+    	System.out.println("URL Launch Fail");
+    	return false;	
     }
     
-    public void Enter_Credential_And_Login() {
-    	driver.findElement(Email_XP).sendKeys("admin");
-    	driver.findElement(Password_XP).sendKeys("admin");
+    public boolean User_Login() {
+    	driver.findElement(Email_ID).sendKeys("standard_user");
+    	driver.findElement(Password_ID).sendKeys("secret_sauce");
+    	driver.findElement(LoginButton_ID).click();
+    	return driver.findElement(ProductsTextOnHomePage).isDisplayed();
     }
 	
 }
